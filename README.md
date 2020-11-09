@@ -1,10 +1,8 @@
-BASE PARA EL BUSCAMINAS: (Mario Gracia)
-=========================
+# BASE PARA EL BUSCAMINAS: Mario Gracia
 
 En este programa se encuentra la base para el Buscaminas de Desarrollo de intefaces (DAM2).
 
-Pasos
------
+## Pasos
 
 1. Descárgate el cliente de github si no lo tienes en tu equipo. Créate una cuenta y loguéate.
 
@@ -18,7 +16,7 @@ Pasos
 
 
 
-Licencia
---------
+## Licencia
+
 
 La licencia de este repositorio y todo su contenido es [GNU General Public License v.3.0](https://es.wikipedia.org/wiki/Licencia_p%C3%BAblica_general_de_GNU) 
