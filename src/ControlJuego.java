@@ -77,14 +77,23 @@ public class ControlJuego {
 	 **/
 	private int calculoMinasAdjuntas(int i, int j){
 		int contadorMinasAdjuntas = 0;
-		int inicialX = 0;
-		int finalX = 0;
-		int inicialY = 1;
-		int finalY = 1;
 
-		for(int x = 0; i < tablero.length;x++){
-				for(int y = 0; i < tablero.length;y++){
+		int inicialX = Math.max(0, i-1);
+		int finalX =  Math.min(LADO_TABLERO-1,i+1);
 
+		int inicialY = j - 1;
+		if(inicialY < 0){
+		 inicialY = 0;
+		}
+		int finalY = j + 1;
+
+	if(inicialX >=0 && finalX >= 0 && inicialX >= 0 && finalY >=0){
+		for(int a = inicialX; a <= finalX;a++){
+				for(int b = inicialY; a <= finalY;b++){
+						if(tablero[a][b] == MINA){
+						contadorMinasAdjuntas++;
+					}
+				}
 			}
 		}
 		return contadorMinasAdjuntas;
