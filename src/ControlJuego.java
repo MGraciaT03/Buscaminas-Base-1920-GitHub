@@ -81,11 +81,8 @@ public class ControlJuego {
 		int inicialX = Math.max(0, i-1);
 		int finalX =  Math.min(LADO_TABLERO-1,i+1);
 
-		int inicialY = j - 1;
-		if(inicialY < 0){
-		 inicialY = 0;
-		}
-		int finalY = j + 1;
+		int inicialY =  Math.max(0, j-1);
+		int finalY =  Math.min(LADO_TABLERO-1,j+1);
 
 	if(inicialX >=0 && finalX >= 0 && inicialX >= 0 && finalY >=0){
 		for(int a = inicialX; a <= finalX;a++){
