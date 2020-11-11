@@ -36,8 +36,24 @@ public class ControlJuego {
 	public void inicializarPartida(){
 
 		//TODO: Repartir minas e inicializar puntaci�n. Si hubiese un tablero anterior, lo pongo todo a cero para inicializarlo.
-		
-		
+		//Poner todas las posiciones a cero
+		//Poner la puntuacion a cero
+
+		//Colocar las minas:Mientras que queden minas por colocar,saco una posicion aleatorioa (x,y) que no tenga minas,la colocas
+		puntuacion = 0;
+		int minasTotales = MINAS_INICIALES;
+		int posicionX;
+		int posicionY; 
+		Random azar = new Random();
+		while(minasTotales >= 0){
+			posicionX = azar.nextInt(tablero.length);
+			posicionY = azar.nextInt(tablero.length);
+			if(tablero[posicionX][posicionY] != MINA){
+				tablero[posicionX][posicionY] = MINA;
+				minasTotales--;
+			}
+		}
+				
 		
 		//Al final del m�todo hay que guardar el n�mero de minas para las casillas que no son mina:
 		for (int i = 0; i < tablero.length; i++) {
@@ -49,6 +65,8 @@ public class ControlJuego {
 		}
 	}
 	
+	
+	
 	/**Cálculo de las minas adjuntas: 
 	 * Para calcular el número de minas tenemos que tener en cuenta que no nos salimos nunca del tablero.
 	 * Por lo tanto, como mucho la i y la j valdrán LADO_TABLERO-1.
@@ -58,7 +76,18 @@ public class ControlJuego {
 	 * @return : El número de minas que hay alrededor de la casilla [i][j]
 	 **/
 	private int calculoMinasAdjuntas(int i, int j){
-		return 0;
+		int contadorMinasAdjuntas = 0;
+		int inicialX = 0;
+		int finalX = 0;
+		int inicialY = 1;
+		int finalY = 1;
+
+		for(int x = 0; i < tablero.length;x++){
+				for(int y = 0; i < tablero.length;y++){
+
+			}
+		}
+		return contadorMinasAdjuntas;
 	}
 	
 	/**

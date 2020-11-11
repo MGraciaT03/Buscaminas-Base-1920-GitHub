@@ -60,7 +60,7 @@ public class VentanaPrincipal {
 		panelPuntuacion = new JPanel();
 		panelPuntuacion.setLayout(new GridLayout(1,1));
 		panelJuego = new JPanel();
-		panelJuego.setLayout(new GridLayout(10,10));
+		panelJuego.setLayout(new GridLayout(10, 10, 4, 4));
 		
 		
 		botonEmpezar = new JButton("Go!");
@@ -139,7 +139,16 @@ public class VentanaPrincipal {
 	 * Método que inicializa todos los lísteners que necesita inicialmente el programa
 	 */
 	public void inicializarListeners(){
-		//TODO
+		botonEmpezar.addActionListener(e -> {
+		
+		});
+			for (int i = 0; i < botonesJuego.length; i++) {
+				for (int j = 0; j < botonesJuego.length; j++) {
+					botonesJuego[i][j].addActionListener(e -> {
+
+					});
+				}
+			}
 	}
 	
 	
@@ -156,7 +165,8 @@ public class VentanaPrincipal {
 	 * @param j: posición horizontal de la celda.
 	 */
 	public void mostrarNumMinasAlrededor(int i , int j) {
-		//TODO
+		
+
 	}
 	
 	
