@@ -139,22 +139,25 @@ public class VentanaPrincipal {
 	 * Método que inicializa todos los lísteners que necesita inicialmente el programa
 	 */
 	public void inicializarListeners(){
-		botonEmpezar.addActionListener(e -> {
-		
-		});
-			for (int i = 0; i < botonesJuego.length; i++) {
-				for (int j = 0; j < botonesJuego.length; j++) {
-					botonesJuego[i][j].addActionListener(e -> {
-
-					});
-				}
-			}
+		for(int i = 0; i < panelesJuego.length; i++){
+			for(int j = 0; j < panelesJuego[i].length; j++){
+			botonesJuego[i][j].addActionListener(e ->{
+			
+			});
+		}
 	}
+		
+		//dar listener a los botones para que se abran las casillas
+	
+	}
+				
+			
+	
 	
 	
 	/**
 	 * Pinta en la pantalla el número de minas que hay alrededor de la celda
-	 * Saca el botón que haya en la celda determinada y añade un JLabel centrado y no editable con el número de minas alrededor.
+	 * Saca el botón que haya en la celda determinada y añade un JLabel centrado  con el número de minas alrededor.
 	 * Se pinta el color del texto según la siguiente correspondecia (consultar la variable correspondeciaColor):
 	 * - 0 : negro
 	 * - 1 : cyan
@@ -165,7 +168,22 @@ public class VentanaPrincipal {
 	 * @param j: posición horizontal de la celda.
 	 */
 	public void mostrarNumMinasAlrededor(int i , int j) {
+		panelesJuego[i][j].remove(botonesJuego[i][j]);
 		
+		JLabel panelMinaAlrededor = new JLabel();
+		panelMinaAlrededor.setHorizontalAlignment(SwingConstants.CENTER);
+		panelMinaAlrededor.setText("" + juego.getMinasAlrededor(i, j));
+		panelMinaAlrededor.setForeground(correspondenciaColores[juego.getMinasAlrededor(i, j)]);
+		
+		panelesJuego[i][j].add(panelMinaAlrededor);
+		refrescarPantalla();
+		
+
+
+		//todo
+		//Seleccionar el panel[i][j] corespondiente
+		//Eliminar todos sus componentes //Buscar en internet
+		//El numero de mina se saca de ControlJuego,con el metodo (getMinasAlrededor)
 
 	}
 	
@@ -176,14 +194,17 @@ public class VentanaPrincipal {
 	 * @post : Todos los botones se desactivan excepto el de volver a iniciar el juego.
 	 */
 	public void mostrarFinJuego(boolean porExplosion) {
-		//TODO
+		if(porExplosion == true){
+			int gameOver = JOptionPane.showConfirmDialog(ventana, "Fin del juego....", "FIN",JOptionPane.OK_OPTION);
+
+		}
 	}
 
 	/**
 	 * Método que muestra la puntuación por pantalla.
 	 */
 	public void actualizarPuntuacion() {
-		//TODO
+		pantallaPuntuacion.setText("" + juego.getPuntuacion());
 	}
 	
 	/**
