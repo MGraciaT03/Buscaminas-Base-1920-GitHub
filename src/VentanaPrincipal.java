@@ -126,6 +126,7 @@ public class VentanaPrincipal {
 			for (int j = 0; j < botonesJuego[i].length; j++) {
 				botonesJuego[i][j] = new JButton("-");
 				panelesJuego[i][j].add(botonesJuego[i][j]);
+				botonesJuego[i][j].setEnabled(false);
 			}
 		}
 		
@@ -141,11 +142,28 @@ public class VentanaPrincipal {
 	public void inicializarListeners(){
 		for(int i = 0; i < panelesJuego.length; i++){
 			for(int j = 0; j < panelesJuego[i].length; j++){
-			botonesJuego[i][j].addActionListener(e ->{
-			
-			});
+			botonesJuego[i][j].addActionListener(new ActionBoton(this, i, j));
 		}
 	}
+	botonEmpezar.addActionListener(new ActionListener(){
+		@Override
+		public void actionPerformed(ActionEvent e){
+			for(int i = 0; i < panelesJuego.length; i++){
+				for(int j = 0; j < panelesJuego[i].length; j++){
+					panelesJuego[i][j].removeAll();
+				}
+			}
+			juego.inicializarPartida();
+			for(int i = 0; i < panelesJuego.length; i++){
+				for(int j = 0; j < panelesJuego[i].length; j++){
+				panelesJuego[i][j].add(botonesJuego[i][j]);
+				botonesJuego[i][j].setEnabled(true);
+				actualizarPuntuacion();
+				}
+			}
+			refrescarPantalla();
+		}
+	});
 		
 		//dar listener a los botones para que se abran las casillas
 	
@@ -176,6 +194,7 @@ public class VentanaPrincipal {
 		panelMinaAlrededor.setForeground(correspondenciaColores[juego.getMinasAlrededor(i, j)]);
 		
 		panelesJuego[i][j].add(panelMinaAlrededor);
+		actualizarPuntuacion();
 		refrescarPantalla();
 		
 
@@ -196,7 +215,10 @@ public class VentanaPrincipal {
 	public void mostrarFinJuego(boolean porExplosion) {
 		if(porExplosion == true){
 			int gameOver = JOptionPane.showConfirmDialog(ventana, "Fin del juego....", "FIN",JOptionPane.OK_OPTION);
-
+		}else{
+			if (juego.esFinJuego()) {
+				int partidaGanada = JOptionPane.showConfirmDialog(ventana, "!Enhorabuena,has ganado! \n" + "Puntacion: " +  juego.getPuntuacion(),"FIN",JOptionPane.OK_OPTION);
+			}
 		}
 	}
 
@@ -204,7 +226,7 @@ public class VentanaPrincipal {
 	 * Método que muestra la puntuación por pantalla.
 	 */
 	public void actualizarPuntuacion() {
-		pantallaPuntuacion.setText("" + juego.getPuntuacion());
+		pantallaPuntuacion.setText(Integer.toString(juego.getPuntuacion()));
 	}
 	
 	/**
