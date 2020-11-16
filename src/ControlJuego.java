@@ -5,12 +5,18 @@ import java.util.Random;
  * Clase gestora del tablero de juego.
  * Guarda una matriz de enteros representado el tablero.
  * Si hay una mina en una posición guarda el número -1
- * Si no hay una mina, se guarda cuántas minas hay alrededor.
+ * Si no hay una mina, se guarda cuántas minas hay en su alrededor.
  * Almacena la puntuación de la partida
- * @author jesusredondogarcia
+ * 
+ *{@link #inicializarPartida()} //Este metodo se encarga de repartir las minas del tablero
+ * @author Mario Gracia Torres
+ * @version 1.0
+ * @since 1.0
+ * @see Esta clase VentanaPrincipal se encarga del funcionamiento de la logica del juego
  *
  */
 public class ControlJuego {
+	//atributos del ControlJuego,minas y forma del tablero
 	private final static int MINA = -1;
 	final int MINAS_INICIALES = 20;
 	final int LADO_TABLERO = 10;
@@ -20,43 +26,43 @@ public class ControlJuego {
 	
 	
 	public ControlJuego() {
-		//Creamos el tablero:
+		//Creamos el tablero que posee un total de 100 celdas:
 		tablero = new int[LADO_TABLERO][LADO_TABLERO];
 		
-		//Inicializamos una nueva partida
-		inicializarPartida();
-		depurarTablero();
 	}
 	
 	
-	/**Método para generar un nuevo tablero de partida:
-	 * @pre: La estructura tablero debe existir. 
-	 * @post: Al final el tablero se habrá inicializado con tantas minas como marque la variable MINAS_INICIALES. 
-	 * 			El resto de posiciones que no son minas guardan en el entero cuántas minas hay alrededor de la celda
+	/**Método para generar un nuevo tablero de partida,añade aleatoriamente las minas
+	 * sin que coincidan la misma posicion con la mina añadida
+	 * @post: El tablero se inicializa añadiendo las inas aleaorias en las celdas
+	 * 			se crea una variable que almacene las minas iniciales y no parara de añadr minas hasta que llegue a cero.
+	 * 			El resto de posiciones que no son minas guardan  cuántas minas hay alrededor de la celda
 	 */
 	public void inicializarPartida(){
 
-		//TODO: Repartir minas e inicializar puntaci�n. Si hubiese un tablero anterior, lo pongo todo a cero para inicializarlo.
-		//Poner todas las posiciones a cero
-		//Poner la puntuacion a cero
+		//Se reparte las minas e inicializar puntacion. Si hubiese un tablero anterior,se incicializa a cero.
+		//Poner la puntuacion y  las posiciones a cero
 
-		//Colocar las minas:Mientras que queden minas por colocar,saco una posicion aleatorioa (x,y) que no tenga minas,la colocas
+		//Para colocar las minas, mientras queden minas por colocar,se saca una posicion aleatoria que no coincida con una mina ya puesta y se añade
+		tablero = new int [LADO_TABLERO][LADO_TABLERO];
 		puntuacion = 0;
-		int minasTotales = MINAS_INICIALES;
-		int posicionX;
-		int posicionY; 
+		int posicionX = 0;
+		int posicionY = 0; 
 		Random azar = new Random();
-		while(minasTotales >= 0){
+		int minasAñadir = MINAS_INICIALES;
+		while(minasAñadir > 0){
 			posicionX = azar.nextInt(tablero.length);
 			posicionY = azar.nextInt(tablero.length);
 			if(tablero[posicionX][posicionY] != MINA){
 				tablero[posicionX][posicionY] = MINA;
-				minasTotales--;
+				minasAñadir--;
 			}
 		}
+		
+	
 				
 		
-		//Al final del m�todo hay que guardar el n�mero de minas para las casillas que no son mina:
+		//Al final del metodo,se guarda el numero de minas para las casillas que no hay minas,indicando cuantas hay alrededor.
 		for (int i = 0; i < tablero.length; i++) {
 			for (int j = 0; j < tablero[i].length; j++) {
 				if (tablero[i][j] != MINA){
@@ -68,13 +74,15 @@ public class ControlJuego {
 	
 	
 	
-	/**Cálculo de las minas adjuntas: 
+	/*
+	 *Cálculo de las minas adjuntas: 
 	 * Para calcular el número de minas tenemos que tener en cuenta que no nos salimos nunca del tablero.
 	 * Por lo tanto, como mucho la i y la j valdrán LADO_TABLERO-1.
 	 * Por lo tanto, como poco la i y la j valdrán 0.
+	 * Una vez evitado salirse del tabero,si encontramos una celda que hay una mina,se incrementara el contador
 	 * @param i: posición vertical de la casilla a rellenar
 	 * @param j: posición horizontal de la casilla a rellenar
-	 * @return : El número de minas que hay alrededor de la casilla [i][j]
+	 * @return : El número de minas que hay alrededor de la casilla escogida
 	 **/
 	private int calculoMinasAdjuntas(int i, int j){
 
@@ -95,16 +103,13 @@ public class ControlJuego {
 				}
 			}
 			return contadorMinasAdjuntas;	
-		}
-			
-	
-	
+		}	
 	/**
-	 * Método que nos permite abrir una casilla,devuelve verdadero y suma 1 punto si no hay mina
+	 * Método que permite al abrir una casilla,devuelve true y suma 1 punto sino hay una mina
 	 * @pre : La casilla nunca debe haber sido abierta antes, no es controlado por el ControlJuego. Por lo tanto siempre sumaremos puntos
 	 * @param i: posición verticalmente de la casilla a abrir
 	 * @param j: posición horizontalmente de la casilla a abrir
-	 * @return : Verdadero si no ha explotado una mina. Falso en caso contrario.
+	 * @return : booleano que retorna si no ha explotado una mina. False en caso contrario.
 	 */
 	public boolean abrirCasilla(int i, int j){
 		boolean noHayMina = false;
@@ -118,8 +123,8 @@ public class ControlJuego {
 	
 	
 	/**
-	 * Método que checkea si se ha terminado el juego porque se han abierto todas las casillas.
-	 * @return Devuelve verdadero si se han abierto todas las celdas que no son minas.
+	 * Método que comprueba si se ha terminado el juego, porque se han abierto todas las casillas del tablero.
+	 * @return Devuelve true si se han abierto todas las celdas que no son minas.
 	 **/
 	public boolean esFinJuego(){
 		boolean finJuegoGanado = false;
@@ -132,7 +137,8 @@ public class ControlJuego {
 	
 	
 	/**
-	 * Método que pinta por pantalla toda la información del tablero, se utiliza para depurar
+	 * Método que pinta por pantalla toda la información del tablero, se utiliza para depurar y comprobar 
+	 * si los metodos estan funcionando correctamente
 	 */
 	public void depurarTablero(){
 		System.out.println("---------TABLERO--------------");
@@ -146,18 +152,18 @@ public class ControlJuego {
 	}
 
 	/**
-	 * Método que se utiliza para obtener las minas que hay alrededor de una celda
-	 * @pre : El tablero tiene que estar ya inicializado, por lo tanto no hace falta calcularlo, símplemente consultarlo
+	 * Método que se utiliza para retornar las minas que hay alrededor de una celda
+	 * @pre : El tablero tiene que estar inicializado, solo consultarlo
 	 * @param i : posición vertical de la celda.
 	 * @param j : posición horizontal de la cela.
-	 * @return Un entero que representa el número de minas alrededor de la celda
+	 * @return Un entero que representa el número de minas alrededor que posee la celda
 	 */
 	public int getMinasAlrededor(int i, int j) {
 		return tablero[i][j];	
 	}
 
 	/**
-	 * Método que devuelve la puntuación actual
+	 * Método que retorna la puntuación actual
 	 * @return Un entero con la puntuación actual
 	 */
 	public int getPuntuacion() {
