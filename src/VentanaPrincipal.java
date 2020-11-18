@@ -4,7 +4,10 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.sound.midi.Synthesizer;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -45,6 +48,7 @@ public class VentanaPrincipal {
 	JPanel panelEmpezar;
 	JPanel panelPuntuacion;
 	JPanel panelJuego;
+	JLabel imagen;
 
 	// Todos los botones se meten en un panel de forma independiente.
 	// Se hace esto para despues los botones se puedan cambiar los componentes
@@ -72,6 +76,7 @@ public class VentanaPrincipal {
 		ventana.setBounds(100, 100, 700, 500);
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		juego = new ControlJuego();
+		imagen = new JLabel();
 	}
 
 	// Inicializa todos los componentes del frame principal
@@ -110,10 +115,18 @@ public class VentanaPrincipal {
 		settings.gridy = 0;
 		settings.weightx = 1;
 		settings.weighty = 1;
+		panelImagen.setBackground(Color.WHITE);
 		settings.fill = GridBagConstraints.BOTH;
+
+		imagen.setIcon(new ImageIcon("mario.jpg"));
+		imagen.setVisible(false);
+		panelImagen.add(imagen);
+
+		
 		ventana.add(panelImagen, settings);
 
 		// PanelEmpezar
+		
 		settings = new GridBagConstraints();
 		settings.gridx = 1;
 		settings.gridy = 0;
@@ -121,6 +134,7 @@ public class VentanaPrincipal {
 		settings.weighty = 1;
 		settings.fill = GridBagConstraints.BOTH;
 		ventana.add(panelEmpezar, settings);
+
 
 		// PanelPuntuacion
 		settings = new GridBagConstraints();
@@ -193,6 +207,8 @@ public class VentanaPrincipal {
 				}
 				juego.inicializarPartida();
 				actualizarPuntuacion();
+				imagen.setIcon(new ImageIcon("mario.jpg"));
+				imagen.setVisible(true);
 				for (int i = 0; i < panelesJuego.length; i++) {
 					for (int j = 0; j < panelesJuego[i].length; j++) {
 						panelesJuego[i][j].add(botonesJuego[i][j]);
@@ -244,9 +260,9 @@ public class VentanaPrincipal {
 			for (int i = 0; i < panelesJuego.length; i++) {
 				for (int j = 0; j < panelesJuego[i].length; j++) {
 					botonesJuego[i][j].setEnabled(false);
-
 				}
 			}
+			imagen.setIcon(new ImageIcon("mariodeath.jpg"));
 			JOptionPane.showMessageDialog(ventana, "Game Over \n" + "Puntacion Conseguida: " + juego.getPuntuacion());
 		} else {
 			if (juego.esFinJuego()) {
@@ -256,6 +272,7 @@ public class VentanaPrincipal {
 
 					}
 				}
+				imagen.setIcon(new ImageIcon("mariojump.jpg"));
 				JOptionPane.showMessageDialog(ventana,
 						"¡Enhorabuena,has ganado! \n" + "Puntacion Conseguida: " + juego.getPuntuacion());
 			}
