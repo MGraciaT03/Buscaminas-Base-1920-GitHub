@@ -1,6 +1,6 @@
-# BASE PARA EL BUSCAMINAS: Mario Gracia
+# BASE PARA EL BUSCAMINAS: Mario Gracia Torres
 
-En este programa se encuentra la base para el Buscaminas de Desarrollo de intefaces (DAM2).
+En este programa se encuentra la base para el Buscaminas de Desarrollo de intefaces (DAM2) con una pequeña modificacion.
 
 ## Pasos
 

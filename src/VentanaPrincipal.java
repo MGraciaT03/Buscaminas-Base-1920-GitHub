@@ -42,7 +42,7 @@ import javax.swing.SwingConstants;
 public class VentanaPrincipal {
 
 	// La ventana principal guarda la mayoria de los componentes, poseemos la
-	// ventana raiz,paneles y botones,:
+	// ventana raiz,paneles y botones,y un panel especial que ira una imagen:
 	JFrame ventana;
 	JPanel panelImagen;
 	JPanel panelEmpezar;
@@ -71,6 +71,7 @@ public class VentanaPrincipal {
 
 	// Constructor parametrizado, marca el tamaño del frame, cierre del frame y
 	// declara el controlJuego
+	//Tambien se declara el JLabel imagen para que pueda ser modificable por toda la clase
 	public VentanaPrincipal() {
 		ventana = new JFrame();
 		ventana.setBounds(100, 100, 700, 500);
@@ -118,6 +119,8 @@ public class VentanaPrincipal {
 		panelImagen.setBackground(Color.WHITE);
 		settings.fill = GridBagConstraints.BOTH;
 
+		//volvemos el fondo blanco al panel,añadimos una imagen
+		//La hacemos invisible 
 		imagen.setIcon(new ImageIcon("mario.jpg"));
 		imagen.setVisible(false);
 		panelImagen.add(imagen);
@@ -196,6 +199,7 @@ public class VentanaPrincipal {
 		//Se crea un nuevo listener al ser pulsado el BotonEmpezar.
 		//Este listener borra los paneles del juego,llama al metodo inicializarPartida.
 		//Añade los botones a los paneles,los habilita para su uso, actualiza la puntuacion a 0.
+		//Si pulsamos el botonEmpezar,la imagen aparecera en el panel
 		//Y finalmete llama al metodo refrescarPantalla cada vez que pulsemos un boton del panelJuego
 		botonEmpezar.addActionListener(new ActionListener() {
 			@Override
@@ -254,6 +258,7 @@ public class VentanaPrincipal {
 	 * 
 	 * @post : Todos los botones se desactivan excepto el de volver a iniciar el
 	 *       juego.
+	 * La imagen cambiara al acabar el juego,si hemos perdido o hemos ganado
 	 */
 	public void mostrarFinJuego(boolean porExplosion) {
 		if (porExplosion == true) {
